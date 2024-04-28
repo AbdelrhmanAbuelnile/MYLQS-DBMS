@@ -104,25 +104,25 @@ class Database implements Serializable {
 
 public class Main {
 
-  public static void readFrom(String fileName) {
-    try {
-        Database loadedDb = Database.loadFromFile(fileName);
-        Set<String> tableNames = loadedDb.getTables();
-        int totalRecords = 0;
-        for (String tableName : tableNames) {
-            Table table = loadedDb.getTable(tableName);
-            List<Record> loadedRecords = table.getRecords();
-            totalRecords += loadedRecords.size();
-            System.out.println("Records for table " + tableName + ":");
-            for (Record record : loadedRecords) {
-                System.out.println(record);
+    public static void readFrom(String fileName) {
+        try {
+            Database loadedDb = Database.loadFromFile(fileName);
+            Set<String> tableNames = loadedDb.getTables();
+            int totalRecords = 0;
+            for (String tableName : tableNames) {
+                Table table = loadedDb.getTable(tableName);
+                List<Record> loadedRecords = table.getRecords();
+                totalRecords += loadedRecords.size();
+                System.out.println("Records for table " + tableName + ":");
+                for (Record record : loadedRecords) {
+                    System.out.println(record);
+                }
             }
+            System.out.println("Total records: " + totalRecords);
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("No database with name " + fileName + " exists.");
         }
-        System.out.println("Total records: " + totalRecords);
-    } catch (IOException | ClassNotFoundException e) {
-        System.out.println("No database with name " + fileName + " exists.");
     }
-}
 
     public static void main(String[] args) throws IOException {
         Scanner scanner = new Scanner(System.in);
@@ -130,8 +130,8 @@ public class Main {
         System.out.println("Welcome to the Database Management System!");
         System.out.println("Enter your Database name: ");
         String userInput = scanner.nextLine();
-        String [] userCommand = userInput.toLowerCase().split(" ",2);
-        if (!userCommand[0].equals("use") && !userCommand[0].equals("create")){
+        String[] userCommand = userInput.toLowerCase().split(" ", 2);
+        if (!userCommand[0].equals("use") && !userCommand[0].equals("create")) {
             System.out.println(userCommand[0] + " is not a valid command");
             scanner.close();
             return;
@@ -142,8 +142,8 @@ public class Main {
                 case "use":
                     readFrom(userCommand[1]);
                     break;
-                
-                    case "create":
+
+                case "create":
                     db.createDatabase(userCommand[1]);
                     System.out.println("Enter your Table name: ");
                     String tableName = scanner.nextLine();
@@ -163,7 +163,7 @@ public class Main {
                         record.addField(columns[i], values[i]);
                     }
                     db.createTable(tableName);
-                    db.writeToDatabase(userCommand[1],tableName, record);
+                    db.writeToDatabase(userCommand[1], tableName, record);
                     readFrom(userCommand[1]);
                     break;
 
@@ -171,8 +171,7 @@ public class Main {
                     System.out.println("Invalid command");
                     break;
             }
-        }
-        finally {
+        } finally {
             scanner.close();
         }
         System.out.println();
