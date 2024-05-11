@@ -2,11 +2,19 @@ import java.util.*;
 import java.io.*;
 
 class Record implements Serializable {
-    private List<Field<?>> fields;
+    private ArrayList<Field<?>> fields;
 
-    public List<Field<?>> get_fields() {
+    public ArrayList<Field<?>> get_fields() {
         return this.fields;
     }
+
+    public Record(Field<?>... fields) {
+        this.fields = new ArrayList<>();
+        for (Field<?> field : fields) {
+            this.fields.add(field);
+        }
+    }
+
 
     public Record() {
         this.fields = new ArrayList<>();
@@ -28,5 +36,27 @@ class Record implements Serializable {
         }
         sb.append("]");
         return sb.toString();
+    }
+
+    public void print_record_labels() {
+        int size = fields.size();
+        for (int i = 0; i < size; i++) {
+            System.out.print(fields.get(i).name);
+            if (i < size - 1) {
+                System.out.print(" | ");
+            }
+        }
+        System.out.println();  // Move to the next line after printing all labels
+    }
+
+    public void print_record_values() {
+        int size = fields.size();
+        for (int i = 0; i < size; i++) {
+            System.out.print(fields.get(i).value);
+            if (i < size - 1) {
+                System.out.print(" | ");
+            }
+        }
+        System.out.println();  // Move to the next line after printing all labels
     }
 }

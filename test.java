@@ -4,27 +4,28 @@
 // // import java.nio.file.Paths;
 // import java.util.*;
 
-
-
-
-
-
+import java.util.ArrayList;
 
 class test { 
     public static void main(String[] args) {
-        Record record = new Record();
+        Table table = null;
 
-        Field<String> intObject = new Field<>("Abdullah", "Abdullah");
-        Field<Integer> stringObject = new Field<>("Id", 123214124);
-        Field<Double> doubleObject = new Field<>("Salary", 15000.0);
-        Field<Integer> Object = new Field<>("Id", 123214124);
-        record.addField(intObject);
-        record.addField(stringObject);
-        record.addField(doubleObject);
+        for (int i = 0; i < 5; ++i) {
+            Field<Integer> id = new Field<Integer>("id", i);
+            Field<String> name = new Field<String>("name", "Dummy" + i);
+            Field<Double> salary = new Field<Double>("salary", (i + 1) * 1500.0);
+            Record record = new Record(id, name, salary);
+            
+            if (table == null) {
+                table = new Table(record);
+            } else {
+                table.insert(record);
+            }
+        }
+      
+        if (table != null)
+            table.select();
 
-        System.out.println(stringObject == Object);
-
-        System.out.println(record);
-
+       
     }
 }
